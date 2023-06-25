@@ -2,8 +2,14 @@
   "extends": [
     "@rocketseat/eslint-config/node"
   ],
-  "rules": {
-    "camelcase": "off",
-    "no-useless-constructor": "off"
-  }
+  "overrides": [
+    {
+      "files": [
+        "**/*.spec.ts"
+      ],
+      "env": {
+        "jest": true
+      }
+    }
+  ]
 }

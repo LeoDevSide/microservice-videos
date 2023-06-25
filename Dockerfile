@@ -1,7 +1,9 @@
-FROM node:18.16.1-slim
+FROM node:20-slim
+
+RUN apt-get update -y && apt-get install -y
+
+WORKDIR  /home/node/app
 
 USER node
 
-WORKDIR /home/node/app
-
-CMD ["sh", "-c", "npm install && tail -f /dev/null"]
+CMD [ "tail", "-f", "/dev/null" ]
