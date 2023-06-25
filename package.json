@@ -4,7 +4,7 @@
   "description": "admin do catalogo de videos",
   "main": "index.js",
   "scripts": {
-    "ts-node": "ts-node", 
+    "ts-node": "ts-node",
     "tsc": "tsc",
     "clean:tsc": "rm tsconfig.tsbuildinfo"
   },
@@ -12,8 +12,11 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@rocketseat/eslint-config": "^1.2.0",
     "@types/node": "^20.3.1",
+    "eslint": "^8.43.0",
     "ts-node": "^10.9.1",
-    "typescript": "^5.1.3"
+    "typescript": "^5.1.3",
+    "vitest": "^0.32.2"
   }
 }
