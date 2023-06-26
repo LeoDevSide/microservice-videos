@@ -39,7 +39,8 @@
         "dbaeumer.vscode-eslint",
         "rvest.vs-code-prettier-eslint",
         "esbenp.prettier-vscode",
-        "humao.rest-client"
+        "humao.rest-client",
+        "vivaxy.vscode-conventional-commits"
       ]
     }
   }
