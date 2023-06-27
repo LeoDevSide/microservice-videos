@@ -6,7 +6,7 @@ import {
   IsString,
   MaxLength,
 } from 'class-validator'
-import { ClassValidatorFields } from '../../../@shared/validators/class-validator-fields'
+import { ClassValidatorFields } from '../../../@shared/domain/validators/class-validator-fields'
 import { CategoryProps } from '../entities/category.entity'
 
 export class CategoryRules {
@@ -34,7 +34,7 @@ export class CategoryRules {
 
 export class CategoryValidator extends ClassValidatorFields<CategoryRules> {
   validate(data: CategoryProps): boolean {
-    return super.validate(new CategoryRules(data))
+    return super.validate(new CategoryRules(data ?? ({} as any)))
   }
 }
 // Anti-corruption
