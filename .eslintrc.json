@@ -5,7 +5,8 @@
   "overrides": [
     {
       "files": [
-        "**/*.spec.ts"
+        "**/*.spec.ts",
+        "**/*.int-spec.ts"
       ],
       "env": {
         "jest": true
