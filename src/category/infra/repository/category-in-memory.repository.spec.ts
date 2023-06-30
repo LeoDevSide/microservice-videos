@@ -50,7 +50,6 @@ describe('CategoryInMemoryRepository', () => {
     ]
 
     const itemsSorted = await repository['applySort'](items, null, null)
-    console.log(itemsSorted)
     expect(itemsSorted).toStrictEqual([items[1], items[2], items[0]])
   })
 

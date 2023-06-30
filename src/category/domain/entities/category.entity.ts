@@ -56,4 +56,14 @@ export class CategoryEntity extends Entity<CategoryProps> {
     this.props.description = propsValues.description
     this.props.name = propsValues.name
   }
+
+  toJSON() {
+    return {
+      id: this.id,
+      name: this.name,
+      description: this.description,
+      is_active: this.isActive,
+      created_at: this.createdAt,
+    }
+  }
 }
