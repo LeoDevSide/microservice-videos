@@ -11,10 +11,10 @@ export abstract class Entity<Props = any> {
     return this.uniqueEntityId.value
   }
 
-  toJSON(): Required<{ id: string } & Props> {
-    return {
-      id: this.id,
-      ...this.props,
-    } as Required<{ id: string } & Props>
-  }
+  // toJSON(): Required<{ id: string } & Props> {
+  //   return {
+  //     id: this.id,
+  //     ...this.props,
+  //   } as Required<{ id: string } & Props>
+  // }
 }
