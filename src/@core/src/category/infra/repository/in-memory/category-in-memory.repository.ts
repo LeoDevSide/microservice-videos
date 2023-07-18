@@ -1,7 +1,9 @@
-import { CategoryEntity } from '../../domain'
-import { InMemorySearchableRepository } from '../../../@shared/domain/repository/in-memory.repository'
-import { SortDirection } from '../../../@shared/domain/repository/repository.contracts'
-import { CategoryFilter, ICategoryRepository } from './category.repository'
+import {
+  InMemorySearchableRepository,
+  SortDirection,
+} from '../../../../@shared/domain'
+import { CategoryEntity } from '../../../domain'
+import { CategoryFilter, ICategoryRepository } from '../category.repository'
 
 export class InMemoryCategoryRepository
   extends InMemorySearchableRepository<CategoryEntity>

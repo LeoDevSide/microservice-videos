@@ -1,5 +1,5 @@
 /* eslint-disable dot-notation */
-import { CategoryEntity } from '../../domain'
+import { CategoryEntity } from '../../../domain'
 import { InMemoryCategoryRepository } from './category-in-memory.repository'
 
 describe('CategoryInMemoryRepository', () => {
