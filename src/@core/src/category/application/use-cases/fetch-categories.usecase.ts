@@ -9,13 +9,15 @@ import {
 } from '../../infra/repository/category.repository'
 import { CategoryOutputDTO } from './dto/generic-output-category.dto'
 
-type InputDTO = SearchInputDTO
+export type FetchCategoriesInputDTO = SearchInputDTO
 
 type OutputDTO = SearchResultDTO<CategoryOutputDTO>
 
-export class FetchCategoriesUseCase implements UseCase<InputDTO, OutputDTO> {
+export class FetchCategoriesUseCase
+  implements UseCase<FetchCategoriesInputDTO, OutputDTO>
+{
   constructor(private categoryRepository: ICategoryRepository) {}
-  async execute(input: InputDTO): Promise<OutputDTO> {
+  async execute(input: FetchCategoriesInputDTO): Promise<OutputDTO> {
     const params = new CategorySearchParams({
       filter: input.filter,
       page: input.page,

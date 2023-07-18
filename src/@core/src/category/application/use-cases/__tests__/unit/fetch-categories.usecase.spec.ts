@@ -1,6 +1,6 @@
-import { CategoryEntity } from '../../domain/entities/category.entity'
-import { InMemoryCategoryRepository } from '../../infra/repository/category-in-memory.repository'
-import { FetchCategoriesUseCase } from './fetch-categories.usecase'
+import { CategoryEntity } from '../../../../domain'
+import { InMemoryCategoryRepository } from '../../../../infra/repository/in-memory'
+import { FetchCategoriesUseCase } from '../../fetch-categories.usecase'
 
 describe('FetchCategoriesUseCase Unit Tests', () => {
   let repository: InMemoryCategoryRepository
