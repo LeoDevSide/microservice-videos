@@ -2,13 +2,13 @@ import UseCase from '../../../@shared/application/usecase'
 import { CategoryEntity } from '../../domain/entities/category.entity'
 import { ICategoryRepository } from '../../infra/repository/category.repository'
 
-type InputDTO = {
+export type CreateCategoryInputDTO = {
   name: string
   description?: string
   isActive?: boolean
 }
 
-type OutputDTO = {
+export type CreateCategoryOutputDTO = {
   id: string
   name: string
   description: string | null
@@ -16,9 +16,13 @@ type OutputDTO = {
   created_at: Date
 }
 
-export class CreateCategoryUseCase implements UseCase<InputDTO, OutputDTO> {
+export class CreateCategoryUseCase
+  implements UseCase<CreateCategoryInputDTO, CreateCategoryOutputDTO>
+{
   constructor(private categoryRepository: ICategoryRepository) {}
-  async execute(input: InputDTO): Promise<OutputDTO> {
+  async execute(
+    input: CreateCategoryInputDTO,
+  ): Promise<CreateCategoryOutputDTO> {
     const categoryEntity = new CategoryEntity({
       name: input.name,
       description: input.description ?? null,
@@ -26,7 +30,7 @@ export class CreateCategoryUseCase implements UseCase<InputDTO, OutputDTO> {
     })
     await this.categoryRepository.insert(categoryEntity)
 
-    const output: OutputDTO = {
+    const output: CreateCategoryOutputDTO = {
       id: categoryEntity.id,
       name: categoryEntity.name,
       description: categoryEntity.description,
