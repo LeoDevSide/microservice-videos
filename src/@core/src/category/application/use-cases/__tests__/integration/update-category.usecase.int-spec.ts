@@ -1,14 +1,17 @@
-import { NotFoundError } from '../../../@shared/domain/errors/not-found.error'
-import { CategoryEntity } from '../../domain/entities/category.entity'
-import { InMemoryCategoryRepository } from '../../infra/repository/category-in-memory.repository'
-import { UpdateCategoryUsecase } from './update-category.usecase'
+import { PrismaClient } from '@prisma/client'
+import { NotFoundError } from '../../../../../@shared/domain'
+import { CategoryEntity } from '../../../../domain'
+import { PrismaCategoryRepository } from '../../../../infra/repository/prisma/prisma-category.repository'
+import { UpdateCategoryUsecase } from '../../update-category.usecase'
 
 describe('UpdateCategoryUseCase Unit Tests', () => {
-  let repository: InMemoryCategoryRepository
+  const prisma = new PrismaClient()
+  let repository: PrismaCategoryRepository
   let useCase: UpdateCategoryUsecase
-  beforeEach(() => {
-    repository = new InMemoryCategoryRepository()
+  beforeEach(async () => {
+    repository = new PrismaCategoryRepository(prisma)
     useCase = new UpdateCategoryUsecase(repository)
+    await prisma.category.deleteMany()
   })
   it('should update an existent category', async () => {
     const categoryEntity = new CategoryEntity({ name: 'test' })

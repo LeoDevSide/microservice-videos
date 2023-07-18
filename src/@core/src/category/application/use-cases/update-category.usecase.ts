@@ -1,14 +1,14 @@
 import UseCase from '../../../@shared/application/usecase'
 import { ICategoryRepository } from '../../infra/repository/category.repository'
 
-type InputDTO = {
+type UpdateCategoryInputDTO = {
   id: string
   name?: string
   description?: string
   is_active?: boolean
 }
 
-type OutputDTO = {
+export type UpdateCategoryOutputDTO = {
   id: string
   name: string
   description: string | null
@@ -16,9 +16,13 @@ type OutputDTO = {
   created_at: Date
 }
 
-export class UpdateCategoryUsecase implements UseCase<InputDTO, OutputDTO> {
+export class UpdateCategoryUsecase
+  implements UseCase<UpdateCategoryInputDTO, UpdateCategoryOutputDTO>
+{
   constructor(private categoryRepository: ICategoryRepository) {}
-  async execute(input: InputDTO): Promise<OutputDTO> {
+  async execute(
+    input: UpdateCategoryInputDTO,
+  ): Promise<UpdateCategoryOutputDTO> {
     const foundCategoryEntity = await this.categoryRepository.findById(input.id)
 
     if (!foundCategoryEntity) {
@@ -35,7 +39,7 @@ export class UpdateCategoryUsecase implements UseCase<InputDTO, OutputDTO> {
 
     await this.categoryRepository.update(foundCategoryEntity)
 
-    const output: OutputDTO = {
+    const output: UpdateCategoryOutputDTO = {
       id: foundCategoryEntity.id,
       name: foundCategoryEntity.name,
       description: foundCategoryEntity.description,
