@@ -1,14 +1,17 @@
-import { NotFoundError } from '../../../@shared/domain/errors/not-found.error'
-import { CategoryEntity } from '../../domain/entities/category.entity'
-import { InMemoryCategoryRepository } from '../../infra/repository/category-in-memory.repository'
-import { GetCategoryUseCase } from './get-category.usecase'
+import { PrismaClient } from '@prisma/client'
+import { NotFoundError } from '../../../../../@shared/domain'
+import { CategoryEntity } from '../../../../domain'
+import { PrismaCategoryRepository } from '../../../../infra/repository/prisma/prisma-category.repository'
+import { GetCategoryUseCase } from '../../get-category.usecase'
 
 describe('GetCategoryUseCase Unit Tests', () => {
-  let repository: InMemoryCategoryRepository
+  const prisma = new PrismaClient()
+  let repository: PrismaCategoryRepository
   let useCase: GetCategoryUseCase
-  beforeEach(() => {
-    repository = new InMemoryCategoryRepository()
+  beforeEach(async () => {
+    repository = new PrismaCategoryRepository(prisma)
     useCase = new GetCategoryUseCase(repository)
+    await prisma.category.deleteMany()
   })
   it('should find an category with valid id', async () => {
     const entity = new CategoryEntity({ name: 'test' })
