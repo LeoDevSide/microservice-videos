@@ -165,9 +165,13 @@ export default {
 
   // The regexp pattern or array of patterns that Jest uses to detect test files
   testRegex: '.*\\..*spec\\.ts$',
-
   // This option allows the use of a custom results processor
   // testResultsProcessor: undefined,
+  testPathIgnorePatterns: [
+    '/node_modules/',
+    '/infra/repository/prisma/.*\\.int-spec\\.ts',
+    '/application/use-cases/__tests__/integration/.*\\.int-spec\\.ts',
+  ],
 
   // This option allows use of a custom test runner
   // testRunner: "jest-circus/runner",

@@ -8,3 +8,12 @@ services:
       - .:/home/node/app
     ports:
       - 3000:3000
+
+  postgres:
+    image: bitnami/postgresql
+    ports: 
+      - 5432:5432
+    environment:
+      - POSTGRESQL_USERNAME=admin
+      - POSTGRESQL_PASSWORD=pass
+      - POSTGRESQL_DATABASE=microvideos
