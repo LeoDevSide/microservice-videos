@@ -1,5 +1,6 @@
-import { UniqueEntityId } from '../../../@shared/domain'
-import { CategoryEntity } from './category.entity'
+import { UniqueEntityId } from '../../../../@shared/domain'
+import { CategoryEntity } from '../category.entity'
+
 describe('Category Entity Unit Test', () => {
   test('constructor of category', () => {
     const createdAt = new Date()

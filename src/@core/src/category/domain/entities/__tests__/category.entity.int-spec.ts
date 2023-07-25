@@ -1,6 +1,6 @@
 /* eslint-disable no-new */
 
-import { CategoryEntity } from './category.entity'
+import { CategoryEntity } from '../category.entity'
 
 describe('CategoryEntity Integration Tests', () => {
   describe('create method', () => {
