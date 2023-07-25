@@ -5,13 +5,18 @@
   "main": "index.ts",
   "scripts": {
     "test": "jest",
-    "prestart:dev" : "npm run build -w @me/micro-videos",
-    "start:dev" : "npm run build:w -w @me/micro-videos & npm run start:dev -w @me/nestjs"
+    "prestart:dev": "npm run build -w @me/micro-videos",
+    "start:dev": "npm run build:w -w @me/micro-videos & npm run start:dev -w @me/nestjs",
+    "test:all": "concurrently \"npm run test:e2e -w @me/nestjs \" \" npm run test:e2e -w @me/micro-videos\" \"npm run test\""
   },
   "author": "",
   "license": "ISC",
   "workspaces": [
     "./src/@core",
     "./src/nestjs"
-  ]
+  ],
+  "devDependencies": {
+    "@types/lodash": "^4.14.196",
+    "concurrently": "^8.2.0"
+  }
 }

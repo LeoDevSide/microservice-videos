@@ -1,23 +1,16 @@
-
-export default {  
+export default {
   displayName: {
-    name: "nestjs",
-    color: "magentaBright",
+    name: 'nestjs',
+    color: 'magentaBright',
   },
-  moduleFileExtensions: [
-    "js",
-    "json",
-    "ts"
-  ],
-  rootDir: "src",
-  testRegex: ".*\\.spec\\.ts$",
+  moduleFileExtensions: ['js', 'json', 'ts'],
+  rootDir: 'src',
+  testRegex: '.*\\.*spec\\.ts$',
   transform: {
-    "^.+\\.(t|j)s$": "@swc/jest"  
+    '^.+\\.(t|j)s$': '@swc/jest',
   },
-  collectCoverageFrom: [
-    "**/*.(t|j)s",
-  ],
-  coverageDirectory: "../coverage",
-  testEnvironment: "node"
+  collectCoverageFrom: ['**/*.(t|j)s'],
+  coverageDirectory: '../coverage',
+  testEnvironment: 'node',
+  testPathIgnorePatterns: ['/integration/', '/e2e'],
 }
-

@@ -1,10 +1,26 @@
 GET http://localhost:3000/categories
+?page=1
+&per_page=4
+&sort=name
+&filter=Aa
+&sort_dir=desc
+Content-Type: application/jdson
+
+{
+            "page": 1,
+            "per_page": "2",
+            "sort": "name",
+            "filter": "A",
+            "sort_dir": "desc"
+          
+}
 ###
 POST http://localhost:3000/categories
 Content-Type: application/json
 
 {
-  "name": "test"
+  "name" : "aaa",
+  "description" : "bb"
 }
 ###
 GET http://localhost:3000/categories/566ee748-cf37-437f-be62-a552018a5902
@@ -14,5 +30,5 @@ PUT http://localhost:3000/categories/566ee748-cf37-437f-be62-a552018a5902
 Content-Type: application/json
 
 {
-  "name": "test2"
+  
 }

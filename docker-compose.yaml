@@ -9,11 +9,26 @@ services:
     ports:
       - 3000:3000
 
-  postgres:
+  db:
     image: bitnami/postgresql
-    ports: 
+    profiles:
+      - dev
+    ports:
       - 5432:5432
     environment:
       - POSTGRESQL_USERNAME=admin
       - POSTGRESQL_PASSWORD=pass
       - POSTGRESQL_DATABASE=microvideos
+    volumes:
+      - ./.docker/db/data:/var/lib/postgresql/:delegated
+
+  db_test:
+    image: bitnami/postgresql
+    ports:
+      - 54322:5432
+    environment:
+      - POSTGRESQL_USERNAME=test
+      - POSTGRESQL_PASSWORD=test
+      - POSTGRESQL_DATABASE=microvideos_test
+    tmpfs:
+      - /var/lib/postgresql

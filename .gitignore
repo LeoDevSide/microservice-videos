@@ -4,3 +4,5 @@ tsconfig.tsbuildinfo
 __coverage
 dist
 regex.js
+.env
+.env.test
