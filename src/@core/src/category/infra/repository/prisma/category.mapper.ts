@@ -1,7 +1,7 @@
 import { Prisma } from '@prisma/client'
 import { CategoryEntity } from '../../../domain'
 import { UniqueEntityId } from '../../../../@shared/domain'
-import EntityValidationError from '../../../../@shared/domain/errors/validation.error'
+import { EntityValidationError } from '../../../../@shared/domain/errors/validation.error'
 import { LoadEntityError } from '../../../../@shared/domain/errors/load-entity.error'
 
 export class CategoryModelMapper {

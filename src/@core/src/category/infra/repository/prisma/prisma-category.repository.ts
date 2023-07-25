@@ -25,13 +25,17 @@ export class PrismaCategoryRepository implements ICategoryRepository {
 
   async search(props: CategorySearchParams): Promise<CategorySearchResult> {
     const totalCount = await this.prisma.category.count({
-      where: props.filter ? { name: { contains: props.filter } } : undefined,
+      where: props.filter
+        ? { name: { contains: props.filter, mode: 'insensitive' } }
+        : undefined,
     })
     const fetchCategories = await this.prisma.category.findMany({
       take: props.perPage,
       orderBy: { [props.sort ?? 'created_at']: props.sortDir ?? 'desc' },
       skip: (props.page - 1) * props.perPage,
-      where: props.filter ? { name: { contains: props.filter } } : undefined, // todo : make filter acceps an object with properties to filter
+      where: props.filter
+        ? { name: { contains: props.filter, mode: 'insensitive' } }
+        : undefined, // todo : make filter acceps an object with properties to filter
     })
     const categoriesEntities = fetchCategories.map((category) =>
       CategoryModelMapper.toEntity(category),
@@ -52,6 +56,13 @@ export class PrismaCategoryRepository implements ICategoryRepository {
       data: {
         ...entity.toJSON(),
       },
+    })
+  }
+
+  async bulkInsert(entities: CategoryEntity[]): Promise<void> {
+    const entitiesToPersistence = entities.map((entity) => entity.toJSON())
+    await this.prisma.category.createMany({
+      data: entitiesToPersistence,
     })
   }
 
