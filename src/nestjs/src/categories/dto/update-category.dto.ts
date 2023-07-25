@@ -1,5 +1,15 @@
+import { IsString, IsOptional, IsBoolean } from 'class-validator'
+
 export class UpdateCategoryDto {
-  name?: string;
-  description?: string;
-  is_active?: boolean;
+  @IsString()
+  @IsOptional()
+  name?: string
+
+  @IsString()
+  @IsOptional()
+  description?: string
+
+  @IsBoolean()
+  @IsOptional()
+  is_active?: boolean
 }

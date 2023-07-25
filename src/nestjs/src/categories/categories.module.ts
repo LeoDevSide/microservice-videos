@@ -1,20 +1,12 @@
-import { Module } from '@nestjs/common';
-import { CategoriesService } from './categories.service';
-import { CategoriesController } from './categories.controller';
-import {
-  CreateCategoryUseCase,
-  FetchCategoriesUseCase,
-  GetCategoryUseCase,
-  UpdateCategoryUsecase,
-} from '@me/micro-videos/src/category/application';
-import {
-  InMemoryCategoryRepository,
-  ICategoryRepository,
-} from '@me/micro-videos/src/category/infra';
-import { CATEGORY_PROVIDERS } from './categories.providers';
+import { Module } from '@nestjs/common'
+import { CategoriesService } from './categories.service'
+import { CategoriesController } from './categories.controller'
+import { CATEGORY_PROVIDERS } from './categories.providers'
+import { DatabaseModule } from '../database/database.module'
 
 @Module({
   controllers: [CategoriesController],
+  imports: [DatabaseModule],
   providers: [
     CategoriesService,
     ...Object.values(CATEGORY_PROVIDERS.REPOSITORIES),
