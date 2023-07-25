@@ -18,6 +18,10 @@ export abstract class InMemoryRepository<E extends Entity>
     this.items.push(entity)
   }
 
+  async bulkInsert(entities: E[]): Promise<void> {
+    this.items.push(...entities)
+  }
+
   async findById(id: string | UniqueEntityId): Promise<E | null> {
     const _id = `${id}`
     const foundItem = this._get(_id)
@@ -60,12 +64,16 @@ export abstract class InMemoryRepository<E extends Entity>
   }
 }
 
-export abstract class InMemorySearchableRepository<E extends Entity>
+export abstract class InMemorySearchableRepository<
+    E extends Entity,
+    Filter = string,
+  >
   extends InMemoryRepository<E>
-  implements ISearchableRepository<E>
+  implements ISearchableRepository<E, Filter>
 {
   sortableFields: string[] = []
-  async search(props: SearchParams): Promise<any> {
+
+  async search(props: SearchParams<Filter>): Promise<SearchResult<E, Filter>> {
     const itemsFiltered = await this.applyFilter(this.items, props.filter)
     const itemsSorted = await this.applySort(
       itemsFiltered,
@@ -90,7 +98,7 @@ export abstract class InMemorySearchableRepository<E extends Entity>
 
   protected abstract applyFilter(
     items: E[],
-    filter: string | null,
+    filter: Filter | null,
   ): Promise<E[]>
 
   protected async applySort(

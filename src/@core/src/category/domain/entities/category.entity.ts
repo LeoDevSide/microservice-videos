@@ -1,6 +1,6 @@
 import { UniqueEntityId } from '../../../@shared/domain'
 import { Entity } from '../../../@shared/domain/entity/entity'
-import EntityValidationError from '../../../@shared/domain/errors/validation.error'
+import { EntityValidationError } from '../../../@shared/domain/errors/validation.error'
 import CategoryValidatorFactory from '../validators/category.validator'
 
 export type CategoryProps = {
@@ -9,7 +9,15 @@ export type CategoryProps = {
   description?: string
   createdAt?: Date
 }
-export class CategoryEntity extends Entity<CategoryProps> {
+
+export type CategoryJsonProps = {
+  id: string
+  name: string
+  is_active: boolean
+  description: string
+  created_at: Date
+}
+export class CategoryEntity extends Entity<CategoryProps, CategoryJsonProps> {
   constructor(public readonly props: CategoryProps, id?: UniqueEntityId) {
     CategoryEntity.validate(props)
     super(props, id)
@@ -57,7 +65,7 @@ export class CategoryEntity extends Entity<CategoryProps> {
     this.props.name = propsValues.name
   }
 
-  toJSON() {
+  toJSON(): CategoryJsonProps {
     return {
       id: this.id,
       name: this.name,

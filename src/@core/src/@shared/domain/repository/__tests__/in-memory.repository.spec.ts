@@ -8,7 +8,9 @@ type StubEntityProps = {
   price: number
 }
 
-class StubEntity extends Entity<StubEntityProps> {}
+class StubEntity extends Entity<StubEntityProps, any> {
+  toJSON() {}
+}
 class StubRepository extends InMemoryRepository<StubEntity> {}
 describe('InMemoryRepository Unit Tests', () => {
   let repository: StubRepository

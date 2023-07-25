@@ -1,7 +1,9 @@
 import { UniqueEntityId } from '../value-objects/id.value-object'
 import { Entity } from './entity'
 
-class StubEntity extends Entity<{ prop1: string; prop2: number }> {}
+class StubEntity extends Entity<{ prop1: string; prop2: number }, any> {
+  toJSON() {}
+}
 describe('Generic Entity Unit Tests', () => {
   it('should set props and id', () => {
     const arrange = { prop1: 'prop1 value', prop2: 10 }

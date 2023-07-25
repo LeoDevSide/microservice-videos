@@ -3,6 +3,7 @@ import { UniqueEntityId } from '../value-objects/id.value-object'
 
 export interface IRepository<E extends Entity> {
   insert(entity: E): Promise<void>
+  bulkInsert(entities: E[]): Promise<void>
   findById(id: string | UniqueEntityId): Promise<E | null>
   findAll(): Promise<E[]>
   update(entity: E): Promise<void>
@@ -11,7 +12,7 @@ export interface IRepository<E extends Entity> {
 
 export type SortDirection = 'asc' | 'desc'
 
-export type SearchProps<Filter = string> = {
+export type SearchProps<Filter> = {
   page?: number
   perPage?: number
   sort?: string | null
@@ -145,8 +146,8 @@ export class SearchResult<E extends Entity, Filter = string> {
 
 export interface ISearchableRepository<
   E extends Entity,
-  Filter = string,
-  SearchInput = SearchParams,
+  Filter,
+  SearchInput = SearchParams<Filter>,
   SearchOutput = SearchResult<E, Filter>,
 > extends IRepository<E> {
   sortableFields: string[]

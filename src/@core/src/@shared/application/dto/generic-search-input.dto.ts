@@ -8,13 +8,10 @@ export type SearchInputDTO<Filter = string> = {
   sort_dir?: SortDirection
   filter?: Filter | null
 }
-export type SearchResultDTO<ItemType, Filter = string> = {
+export type SearchResultDTO<ItemType> = {
   items: ItemType[]
   total: number
   current_page: number
-  per_page?: number
+  per_page: number
   last_page: number
-  sort?: string | null
-  sort_dir?: string
-  filter?: Filter | null
 }
