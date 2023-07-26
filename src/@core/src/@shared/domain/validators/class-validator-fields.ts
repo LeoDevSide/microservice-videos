@@ -6,8 +6,8 @@ export abstract class ClassValidatorFields<PropsValidated>
 {
   errors: FieldsErrors = null
   validatedData: PropsValidated = null
-  validate(data: any): boolean {
-    const errors: ValidationError[] = validateSync(data)
+  validate(instanceWithDecorators: any): boolean {
+    const errors: ValidationError[] = validateSync(instanceWithDecorators)
     if (errors.length > 0) {
       this.errors = {}
       for (const error of errors) {
@@ -15,7 +15,7 @@ export abstract class ClassValidatorFields<PropsValidated>
         this.errors[field] = Object.values(error.constraints)
       }
     } else {
-      this.validatedData = data
+      this.validatedData = instanceWithDecorators
     }
     return !errors.length
   }
