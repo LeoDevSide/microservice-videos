@@ -9,10 +9,10 @@ describe('CategoryInMemoryRepository', () => {
   it('should no filter items when filter object is null', async () => {
     const items = [new CategoryEntity({ name: 'test' })]
     const filterSpy = jest.spyOn(items, 'filter' as any)
-
-    const itemsFiltered = await repository['applyFilter'](items, null)
+    repository.items = items
+    const itemsFiltered = await repository['applyFilter'](null)
     expect(filterSpy).not.toHaveBeenCalled()
-    expect(itemsFiltered).toStrictEqual(itemsFiltered)
+    expect(repository.items).toStrictEqual(itemsFiltered)
   })
 
   it('should filter items using filter parameter', async () => {
@@ -22,8 +22,8 @@ describe('CategoryInMemoryRepository', () => {
       new CategoryEntity({ name: 'fake' }),
     ]
     const filterSpy = jest.spyOn(items, 'filter' as any)
-
-    const itemsFiltered = await repository['applyFilter'](items, 'TEST')
+    repository.items = items
+    const itemsFiltered = await repository['applyFilter']('TEST')
     expect(filterSpy).toHaveBeenCalledTimes(1)
     expect(itemsFiltered).toStrictEqual([items[0], items[1]])
   })
@@ -48,6 +48,7 @@ describe('CategoryInMemoryRepository', () => {
         createdAt: createdAt2,
       }),
     ]
+    repository.items = items
 
     const itemsSorted = await repository['applySort'](items, null, null)
     expect(itemsSorted).toStrictEqual([items[1], items[2], items[0]])
@@ -59,7 +60,7 @@ describe('CategoryInMemoryRepository', () => {
       new CategoryEntity({ name: 'b' }),
       new CategoryEntity({ name: 'a' }),
     ]
-
+    repository.items = items
     let itemsSorted = await repository['applySort'](items, 'name', 'asc')
     expect(itemsSorted).toStrictEqual([items[2], items[1], items[0]])
 

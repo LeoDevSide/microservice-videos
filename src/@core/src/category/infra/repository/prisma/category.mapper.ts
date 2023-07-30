@@ -24,4 +24,14 @@ export class CategoryModelMapper {
       throw e
     }
   }
+
+  static toModel(entity: CategoryEntity) {
+    return {
+      id: entity.id,
+      name: entity.props.name,
+      description: entity.props.description,
+      created_at: entity.props.createdAt,
+      is_active: entity.props.isActive,
+    }
+  }
 }

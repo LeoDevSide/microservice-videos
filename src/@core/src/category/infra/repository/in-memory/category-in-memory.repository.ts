@@ -11,11 +11,10 @@ export class InMemoryCategoryRepository
 {
   sortableFields: string[] = ['name', 'createdAt']
   protected async applyFilter(
-    items: CategoryEntity[],
     filter: CategoryFilter,
   ): Promise<CategoryEntity[]> {
-    if (!filter) return items
-    return items.filter((item) => {
+    if (!filter) return this.items
+    return this.items.filter((item) => {
       return item.name.toLowerCase().includes(filter.toLowerCase())
     })
   }

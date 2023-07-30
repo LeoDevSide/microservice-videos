@@ -4,12 +4,13 @@ import {
 } from '../../../@shared/application/dto/generic-search-input.dto'
 import UseCase from '../../../@shared/application/usecase'
 import {
+  CategoryFilter,
   CategorySearchParams,
   ICategoryRepository,
 } from '../../infra/repository/category.repository'
 import { CategoryOutputDTO } from './dto/generic-output-category.dto'
 
-export type FetchCategoriesInputDTO = SearchInputDTO
+export type FetchCategoriesInputDTO = SearchInputDTO<CategoryFilter>
 
 export type FetchCategoriesOutputDTO = SearchResultDTO<CategoryOutputDTO>
 
@@ -30,18 +31,10 @@ export class FetchCategoriesUseCase
 
     const foundCategoriesList = await this.categoryRepository.search(params)
 
-    const listInJson = foundCategoriesList.items.map((category) =>
-      category.toJSON(),
-    )
+    const listInJson = foundCategoriesList.toJSON()
 
     // TODO : consider use mapper instead
-    const output: FetchCategoriesOutputDTO = {
-      items: listInJson,
-      current_page: foundCategoriesList.currentPage,
-      last_page: foundCategoriesList.lastPage,
-      total: foundCategoriesList.total,
-      per_page: foundCategoriesList.perPage,
-    }
+    const output: FetchCategoriesOutputDTO = listInJson
 
     return output
   }
