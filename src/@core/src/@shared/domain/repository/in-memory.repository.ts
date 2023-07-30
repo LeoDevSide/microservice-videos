@@ -74,7 +74,7 @@ export abstract class InMemorySearchableRepository<
   sortableFields: string[] = []
 
   async search(props: SearchParams<Filter>): Promise<SearchResult<E, Filter>> {
-    const itemsFiltered = await this.applyFilter(this.items, props.filter)
+    const itemsFiltered = await this.applyFilter(props.filter)
     const itemsSorted = await this.applySort(
       itemsFiltered,
       props.sort,
@@ -96,10 +96,7 @@ export abstract class InMemorySearchableRepository<
     })
   }
 
-  protected abstract applyFilter(
-    items: E[],
-    filter: Filter | null,
-  ): Promise<E[]>
+  protected abstract applyFilter(filter: Filter | null): Promise<E[]>
 
   protected async applySort(
     items: E[],
@@ -117,8 +114,8 @@ export abstract class InMemorySearchableRepository<
 
   protected async applyPaginate(
     items: E[],
-    page: SearchParams['page'],
-    perPage: SearchParams['perPage'],
+    page: number,
+    perPage: number,
   ): Promise<E[]> {
     const start = (page - 1) * perPage // 1 * 15 = 15
     const limit = start + perPage // 15 + 15 = 30

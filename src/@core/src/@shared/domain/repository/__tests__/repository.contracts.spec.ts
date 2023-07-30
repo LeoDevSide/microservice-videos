@@ -1,5 +1,17 @@
+import { Entity } from '../../entity'
 import { SearchParams, SearchResult } from '../repository.contracts'
 
+class StubEntity extends Entity {
+  toJSON() {
+    return this
+  }
+}
+const stubEntityArray = [
+  new StubEntity({}),
+  new StubEntity({}),
+  new StubEntity({}),
+  new StubEntity({}),
+]
 describe('SearchParams Unit Tests', () => {
   test('page property', () => {
     const arrange = [
@@ -116,12 +128,17 @@ describe('SearchParams Unit Tests', () => {
     expect(searchParams.filter).toBeNull()
 
     const arrange = [
-      { filter: 0, expected: '0' },
-      { filter: -1, expected: '-1' },
-      { filter: 2.1, expected: '2.1' },
-      { filter: true, expected: 'true' },
-      { filter: false, expected: 'false' },
-      { filter: {}, expected: '[object Object]' },
+      { filter: 0, expected: 0 },
+      { filter: 'a', expected: 'a' },
+      { filter: 2.1, expected: 2.1 },
+      { filter: true, expected: true },
+      { filter: false, expected: false },
+      { filter: {}, expected: {} },
+      {
+        filter: { prop1: 's', prop2: 2, prop3: {}, prop4: [] },
+        expected: { prop1: 's', prop2: 2, prop3: {}, prop4: [] },
+      },
+
       { filter: '', expected: null },
       { filter: undefined, expected: null },
       { filter: 'anything', expected: 'anything' },
@@ -130,7 +147,7 @@ describe('SearchParams Unit Tests', () => {
 
     arrange.forEach((item) => {
       const searchParams = new SearchParams({ filter: item.filter as any })
-      expect(searchParams.filter).toBe(item.expected)
+      expect(searchParams.filter).toStrictEqual(item.expected)
     })
   })
 })
@@ -138,7 +155,7 @@ describe('SearchParams Unit Tests', () => {
 describe('SearchResult Unit Tests', () => {
   test('constructor props', () => {
     let searchResult = new SearchResult({
-      items: ['entity1', 'entity2', 'entity3'] as any,
+      items: stubEntityArray,
       total: 4,
       currentPage: 1,
       perPage: 2,
@@ -147,19 +164,15 @@ describe('SearchResult Unit Tests', () => {
       sortDir: null,
     })
     expect(searchResult.toJSON()).toStrictEqual({
-      items: ['entity1', 'entity2', 'entity3'],
+      items: stubEntityArray,
       total: 4,
       current_page: 1,
       per_page: 2,
-      filter: null,
-      sort: null,
-      sort_dir: null,
-
       last_page: 2,
     })
 
     searchResult = new SearchResult({
-      items: ['entity1', 'entity2', 'entity3'] as any,
+      items: stubEntityArray as any,
       total: 5,
       currentPage: 1,
       perPage: 2,
@@ -168,14 +181,10 @@ describe('SearchResult Unit Tests', () => {
       sortDir: 'asc',
     })
     expect(searchResult.toJSON()).toStrictEqual({
-      items: ['entity1', 'entity2', 'entity3'],
+      items: stubEntityArray,
       total: 5,
       current_page: 1,
       per_page: 2,
-      filter: 'test',
-      sort: 'name',
-      sort_dir: 'asc',
-
       last_page: 3,
     })
   })
@@ -183,22 +192,17 @@ describe('SearchResult Unit Tests', () => {
     const searchResult = new SearchResult({
       total: 4,
       perPage: 10,
-
-      items: ['entity1', 'entity2', 'entity3'] as any,
+      items: stubEntityArray as any,
       currentPage: 1,
       filter: null,
       sort: null,
       sortDir: null,
     })
     expect(searchResult.toJSON()).toStrictEqual({
+      items: stubEntityArray,
       total: 4,
       per_page: 10,
-      items: ['entity1', 'entity2', 'entity3'],
       current_page: 1,
-      filter: null,
-      sort: null,
-      sort_dir: null,
-
       last_page: 1,
     })
   })

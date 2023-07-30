@@ -26,15 +26,12 @@ class StubEntity extends Entity<StubEntityProps> {
 class StubInMemorySearchableRepository extends InMemorySearchableRepository<StubEntity> {
   sortableFields: string[] = ['name']
 
-  protected async applyFilter(
-    items: StubEntity[],
-    filter: string | null,
-  ): Promise<StubEntity[]> {
+  protected async applyFilter(filter: string | null): Promise<StubEntity[]> {
     if (!filter) {
-      return items
+      return this.items
     }
 
-    return items.filter((i) => {
+    return this.items.filter((i) => {
       return (
         i.props.name.toLowerCase().includes(filter.toLowerCase()) ||
         i.props.price.toString() === filter
@@ -51,8 +48,9 @@ describe('InMemorySearchableRepository Unit Tests', () => {
   describe('applyFilter method', () => {
     it('should no filter items when filter param is null', async () => {
       const items = [new StubEntity({ name: 'name value', price: 5 })]
+      repository.items = items
       const spyFilterMethod = jest.spyOn(items, 'filter' as any)
-      const itemsFiltered = await repository['applyFilter'](items, null)
+      const itemsFiltered = await repository['applyFilter'](null)
       expect(itemsFiltered).toStrictEqual(items)
       expect(spyFilterMethod).not.toHaveBeenCalled()
     })
@@ -63,20 +61,20 @@ describe('InMemorySearchableRepository Unit Tests', () => {
         new StubEntity({ name: 'TEST', price: 5 }),
         new StubEntity({ name: 'fake', price: 0 }),
       ]
-
+      repository.items = items
       const spyFilterMethod = jest.spyOn(items, 'filter' as any)
-      let itemsFiltered = await repository['applyFilter'](items, 'TEST')
+      let itemsFiltered = await repository['applyFilter']('TEST')
 
       expect(itemsFiltered).toStrictEqual([items[0], items[1]])
       expect(itemsFiltered.length).toEqual(2)
       expect(spyFilterMethod).toHaveBeenCalledTimes(1)
 
-      itemsFiltered = await repository['applyFilter'](items, '5')
+      itemsFiltered = await repository['applyFilter']('5')
       expect(itemsFiltered).toStrictEqual([items[0], items[1]])
       expect(itemsFiltered.length).toEqual(2)
       expect(spyFilterMethod).toHaveBeenCalledTimes(2)
 
-      itemsFiltered = await repository['applyFilter'](items, 'no-filter')
+      itemsFiltered = await repository['applyFilter']('no-filter')
       expect(itemsFiltered).toHaveLength(0)
       expect(spyFilterMethod).toHaveBeenCalledTimes(3)
     })
@@ -88,7 +86,7 @@ describe('InMemorySearchableRepository Unit Tests', () => {
         new StubEntity({ name: 'b', price: 5 }),
         new StubEntity({ name: 'a', price: 5 }),
       ]
-
+      repository.items = items
       let itemsSorted = await repository['applySort'](items, null, null)
       expect(itemsSorted).toStrictEqual(items)
 
@@ -102,6 +100,7 @@ describe('InMemorySearchableRepository Unit Tests', () => {
         new StubEntity({ name: 'a', price: 5 }),
         new StubEntity({ name: 'c', price: 5 }),
       ]
+      repository.items = items
 
       let itemsSorted = await repository['applySort'](items, 'name', 'asc')
       expect(itemsSorted).toStrictEqual([items[1], items[0], items[2]])
@@ -120,6 +119,7 @@ describe('InMemorySearchableRepository Unit Tests', () => {
         new StubEntity({ name: 'd', price: 5 }),
         new StubEntity({ name: 'e', price: 5 }),
       ]
+      repository.items = items
 
       let itemsPaginated = await repository['applyPaginate'](items, 1, 2)
       expect(itemsPaginated).toStrictEqual([items[0], items[1]])
@@ -141,7 +141,7 @@ describe('InMemorySearchableRepository Unit Tests', () => {
       const items = Array(16).fill(entity)
       repository.items = items
 
-      const result = await repository.search(new SearchParams())
+      const result = await repository.search(new SearchParams({}))
       expect(result).toStrictEqual(
         new SearchResult({
           items: Array(15).fill(entity),
@@ -279,7 +279,7 @@ describe('InMemorySearchableRepository Unit Tests', () => {
       test.each(arrange)(
         'when value is %j',
         async ({ searchParams, searchResult }) => {
-          const result = await repository.search(searchParams)
+          const result = await repository.search(searchParams as any)
           expect(result).toStrictEqual(searchResult)
         },
       )

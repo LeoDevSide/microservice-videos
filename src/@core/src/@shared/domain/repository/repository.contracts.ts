@@ -12,16 +12,16 @@ export interface IRepository<E extends Entity> {
 
 export type SortDirection = 'asc' | 'desc'
 
-export type SearchProps<Filter> = {
+export type SearchProps<Filter = string> = {
   page?: number
   perPage?: number
   sort?: string | null
   sortDir?: SortDirection | null
-  filter?: Filter | null // def string , implements if necessary
+  filter?: Filter | null
 }
 // Value-Object like
 // props comes from an external layer (request or messaging service)
-export class SearchParams<Filter = string> {
+export class SearchParams<Filter> {
   protected _page: number
   protected _perPage: number = 15
   protected _sort: string | null
@@ -53,8 +53,9 @@ export class SearchParams<Filter = string> {
   }
 
   private set perPage(value: number) {
-    let _perPage = value === (true as any) ? this._perPage : Number(value)
+    let _perPage = Number(value)
     if (
+      value === (true as any) ||
       Number.isNaN(_perPage) ||
       _perPage <= 0 ||
       parseInt(_perPage as any) !== _perPage
@@ -94,7 +95,7 @@ export class SearchParams<Filter = string> {
     this._filter =
       value === null || value === undefined || (value as unknown) === ''
         ? null
-        : (`${value}` as any)
+        : value
   }
 }
 
@@ -132,14 +133,11 @@ export class SearchResult<E extends Entity, Filter = string> {
 
   toJSON() {
     return {
-      items: this.items,
+      items: this.items.map((item) => item.toJSON()),
       total: this.total,
       current_page: this.currentPage,
       per_page: this.perPage,
       last_page: this.lastPage,
-      sort: this.sort,
-      sort_dir: this.sortDir,
-      filter: this.filter,
     }
   }
 }

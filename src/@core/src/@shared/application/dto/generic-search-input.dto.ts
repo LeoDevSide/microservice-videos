@@ -1,7 +1,7 @@
 import { SortDirection } from '../../domain/repository/repository.contracts'
 
 export type Filter = string
-export type SearchInputDTO<Filter = string> = {
+export type SearchInputDTO<Filter> = {
   page?: number
   per_page?: number
   sort?: string | null
