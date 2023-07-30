@@ -19,3 +19,17 @@ model Category {
 
   @@map("categories")
 }
+
+enum CastMemberType {
+  ACTOR
+  DIRECTOR
+}
+
+model CastMember {
+  id         String         @id @default(uuid())
+  name       String
+  type       CastMemberType
+  created_at DateTime       @default(now())
+
+  @@map("cast_members")
+}
