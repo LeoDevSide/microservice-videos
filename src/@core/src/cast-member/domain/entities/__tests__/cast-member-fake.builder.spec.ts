@@ -37,7 +37,7 @@ describe('CastMemberFakerBuilder Unit Tests', () => {
       expect(mockFactory).toHaveBeenCalledWith(0)
 
       mockFactory = jest.fn().mockReturnValue(new UniqueEntityId())
-      const fakerMany = CastMemberFakeBuilder.theCategories(2)
+      const fakerMany = CastMemberFakeBuilder.theCastMembers(2)
       fakerMany.withEntityId(mockFactory)
       fakerMany.build()
 
@@ -69,7 +69,7 @@ describe('CastMemberFakerBuilder Unit Tests', () => {
       const castMember = faker.build()
       expect(castMember.name).toBe(`test name 0`)
 
-      const fakerMany = CastMemberFakeBuilder.theCategories(2)
+      const fakerMany = CastMemberFakeBuilder.theCastMembers(2)
       fakerMany.withName((index) => `test name ${index}`)
       const categories = fakerMany.build()
 
@@ -151,7 +151,7 @@ describe('CastMemberFakerBuilder Unit Tests', () => {
       const castMember = faker.build()
       expect(castMember.createdAt.getTime()).toBe(date.getTime() + 2)
 
-      const fakerMany = CastMemberFakeBuilder.theCategories(2)
+      const fakerMany = CastMemberFakeBuilder.theCastMembers(2)
       fakerMany.withCreatedAt((index) => new Date(date.getTime() + index + 2))
       const categories = fakerMany.build()
 
@@ -185,7 +185,7 @@ describe('CastMemberFakerBuilder Unit Tests', () => {
   })
 
   it('should create many categories', () => {
-    const faker = CastMemberFakeBuilder.theCategories(2)
+    const faker = CastMemberFakeBuilder.theCastMembers(2)
     let categories = faker.build()
 
     categories.forEach((castMember) => {
