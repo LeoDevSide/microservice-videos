@@ -5,14 +5,15 @@ import {
 } from '@me/micro-videos/src/cast-member/application'
 import { CollectionPresenter } from '../../@shared/presenters/collection.presenter'
 import { CastMemberType } from '@me/micro-videos/src/cast-member/domain'
+import { Transform } from 'class-transformer'
 
 export class CastMemberPresenter {
   id: string
   name: string
   type: CastMemberType
-  // @Transform(({ value }: { value: Date }) => {
-  //   return value.toISOString()
-  // })
+  @Transform(({ value }: { value: Date }) => {
+    return value.toISOString()
+  })
   created_at: Date
 
   constructor(output: CastMemberUseCaseOutputDTO) {

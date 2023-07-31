@@ -13,7 +13,25 @@ export type CastMemberFilter = {
   type?: CastMemberType
 }
 
-export class CastMemberSearchParams extends SearchParams<CastMemberFilter> {}
+export class CastMemberSearchParams extends SearchParams<CastMemberFilter> {
+  get filter(): CastMemberFilter | null {
+    return this._filter
+  }
+
+  set filter(value: CastMemberFilter | null) {
+    const normalizeFilter: CastMemberFilter = value
+      ? {
+          name: value.name ? value.name : undefined,
+          type: value.type ? Number(value.type) : undefined,
+        }
+      : undefined
+
+    this._filter =
+      value === null || value === undefined || (value as unknown) === ''
+        ? null
+        : normalizeFilter
+  }
+}
 export class CastMemberSearchResult extends SearchResult<
   CastMemberEntity,
   CastMemberFilter

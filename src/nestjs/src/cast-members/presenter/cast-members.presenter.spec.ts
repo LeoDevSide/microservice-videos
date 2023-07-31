@@ -38,7 +38,7 @@ describe('CastMemberPresenter Unit Tests', () => {
       id: '61cd7b66-c215-4b84-bead-9aef0911aba7',
       name: 'movie',
       type: CastMemberType.ACTOR,
-      created_at: createdAt,
+      created_at: createdAt.toISOString(),
     })
   })
 })
@@ -111,7 +111,7 @@ describe('CastMemberCollectionPresenter Unit Tests', () => {
           id: '61cd7b66-c215-4b84-bead-9aef0911aba7',
           name: 'movie',
           type: CastMemberType.ACTOR,
-          created_at: createdAt,
+          created_at: createdAt.toISOString(),
         },
       ],
     })
@@ -143,7 +143,7 @@ describe('CastMemberCollectionPresenter Unit Tests', () => {
           id: '61cd7b66-c215-4b84-bead-9aef0911aba7',
           name: 'movie',
           type: CastMemberType.ACTOR,
-          created_at: createdAt,
+          created_at: createdAt.toISOString(),
         },
       ],
     })

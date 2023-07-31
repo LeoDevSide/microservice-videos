@@ -27,6 +27,10 @@ import {
 } from './presenter/cast-members.presenter'
 @Controller('cast-members')
 export class CastMembersController {
+  public static toResponse(output: CastMemberUseCaseOutputDTO) {
+    return new CastMemberPresenter(output)
+  }
+
   @Inject(CreateCastMemberUseCase)
   private createCastMemberUseCase: CreateCastMemberUseCase
 
@@ -47,7 +51,7 @@ export class CastMembersController {
     const output = await this.createCastMemberUseCase.execute(
       createCastMemberDto,
     )
-    return this.toResponse(output)
+    return CastMembersController.toResponse(output)
   }
 
   @Get()
@@ -63,7 +67,7 @@ export class CastMembersController {
     @Param('id', new ParseUUIDPipe({ errorHttpStatusCode: 422 })) id: string,
   ) {
     const output = await this.getCastMemberUseCase.execute({ id })
-    return this.toResponse(output)
+    return CastMembersController.toResponse(output)
   }
 
   @Put(':id')
@@ -76,17 +80,13 @@ export class CastMembersController {
       name: updateCastMemberDto.name,
       type: updateCastMemberDto.type,
     })
-    return this.toResponse(output)
+    return CastMembersController.toResponse(output)
   }
 
   @Delete(':id')
   async remove(
     @Param('id', new ParseUUIDPipe({ errorHttpStatusCode: 422 })) id: string,
   ) {
-    return this.deleteCastMemberUseCase.execute({ id })
-  }
-
-  private toResponse(output: CastMemberUseCaseOutputDTO) {
-    return new CastMemberPresenter(output)
+    await this.deleteCastMemberUseCase.execute({ id })
   }
 }
