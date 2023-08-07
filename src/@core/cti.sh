@@ -12,3 +12,6 @@ npm run cti create './src/cast-member/application' -- -i '*spec.ts' -b &&
 npm run cti create './src/cast-member/domain' -- -i '*spec.ts' -b && 
 npm run cti create './src/cast-member/infra' -- -i '*spec.ts' -b
 
+npm run cti create './src/genre/application' -- -i '*spec.ts' -b && 
+npm run cti create './src/genre/domain' -- -i '*spec.ts' -b && 
+npm run cti create './src/genre/infra' -- -i '*spec.ts' -b
