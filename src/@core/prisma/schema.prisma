@@ -11,11 +11,12 @@ datasource db {
 }
 
 model Category {
-  id          String   @id @default(uuid())
+  id          String              @id @default(uuid())
   name        String
   description String?
   is_active   Boolean
-  created_at  DateTime @default(now())
+  created_at  DateTime            @default(now())
+  genres      GenreOnCategories[]
 
   @@map("categories")
 }
@@ -32,4 +33,24 @@ model CastMember {
   created_at DateTime       @default(now())
 
   @@map("cast_members")
+}
+
+model Genre {
+  id         String   @id @default(uuid())
+  name       String
+  is_active  Boolean
+  created_at DateTime @default(now())
+
+  categories GenreOnCategories[]
+
+  @@map("genres")
+}
+
+model GenreOnCategories {
+  genre       Genre    @relation(fields: [genre_id], references: [id])
+  genre_id    String
+  category    Category @relation(fields: [category_id], references: [id])
+  category_id String
+
+  @@id([genre_id, category_id])
 }

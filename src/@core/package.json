@@ -11,7 +11,11 @@
 
     "./src/cast-member/domain": "./dist/cast-member/domain/index.js",
     "./src/cast-member/infra": "./dist/cast-member/infra/index.js",
-    "./src/cast-member/application": "./dist/cast-member/application/index.js"
+    "./src/cast-member/application": "./dist/cast-member/application/index.js",
+
+    "./src/genre/domain": "./dist/genre/domain/index.js",
+    "./src/genre/infra": "./dist/genre/infra/index.js",
+    "./src/genre/application": "./dist/genre/application/index.js"
   },
   "imports": {
     "#shared/domain*": "./dist/@shared/domain/index.js",
