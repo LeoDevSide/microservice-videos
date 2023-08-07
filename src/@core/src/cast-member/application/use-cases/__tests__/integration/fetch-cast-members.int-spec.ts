@@ -57,6 +57,7 @@ describe('FetchCastMembersUseCase Integration Tests', () => {
     const entities = [
       CastMemberFakeBuilder.aCastMember()
         .withName('foo')
+        .withCreatedAt(new Date(new Date().getTime() + 1))
         .withType(CastMemberType.ACTOR)
         .build(),
       CastMemberFakeBuilder.aCastMember()
@@ -66,6 +67,7 @@ describe('FetchCastMembersUseCase Integration Tests', () => {
       CastMemberFakeBuilder.aCastMember()
         .withName('foo 3')
         .withType(CastMemberType.ACTOR)
+        .withCreatedAt(new Date(new Date().getTime() + 2))
         .build(),
       CastMemberFakeBuilder.aCastMember()
         .withName('bar')

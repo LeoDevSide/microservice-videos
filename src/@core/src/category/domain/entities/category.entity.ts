@@ -1,5 +1,5 @@
 import { UniqueEntityId } from '../../../@shared/domain'
-import { Entity } from '../../../@shared/domain/entity/entity'
+import { AggregateRoot } from '../../../@shared/domain/entity/aggregate-root'
 import { EntityValidationError } from '../../../@shared/domain/errors/validation.error'
 import CategoryValidatorFactory from '../validators/category.validator'
 
@@ -17,7 +17,10 @@ export type CategoryJsonProps = {
   description: string
   created_at: Date
 }
-export class CategoryEntity extends Entity<CategoryProps, CategoryJsonProps> {
+export class CategoryEntity extends AggregateRoot<
+  CategoryProps,
+  CategoryJsonProps
+> {
   constructor(public readonly props: CategoryProps, id?: UniqueEntityId) {
     CategoryEntity.validate(props)
     super(props, id)
